@@ -2,14 +2,19 @@
 using System.Security.Cryptography.X509Certificates;
 using dotnetapp.models;
 
+public static class ConnectionStringProvider{
+   public static string ConnectionString{get;}="Server=SASI;Database=appdb;Trusted_Connection=True";
+
+}
+
 public class Program{
-    public static string ConnectionString{get;}="Server=SASI;Database=appdb;Trusted_Connection=True";
+  
 
     public static void AddMovieTicket(MovieTicket ticket)
     {
         string query="insert into MovieTicket(CustomerName,MovieName,ShowTime,SeatNumber,Price,TicketQuantity) values(@customername,@moviename,@showtime,@seatnumber,@price,@ticketquantity)";
 
-       using(SqlConnection connection=new SqlConnection(ConnectionString))
+       using(SqlConnection connection=new SqlConnection(ConnectionStringProvider.ConnectionString))
        {
         connection.Open();
         SqlCommand insertcommand=new SqlCommand(query,connection);
@@ -33,7 +38,7 @@ public class Program{
     public static void DisplayAllMovieTicket()
     {
         string query="select * FROM MovieTicket ";
-        using(SqlConnection connection=new SqlConnection(ConnectionString))
+        using(SqlConnection connection=new SqlConnection(ConnectionStringProvider.ConnectionString))
         {
             connection.Open();
             SqlCommand viewcmd=new SqlCommand(query,connection);
@@ -49,7 +54,7 @@ public class Program{
     {
         string query="update MovieTicket set CustomerName=@customername,MovieName=@moviename,ShowTime=@showtime,SeatNumber=@seatnumber,Price=@price,TicketQuantity=ticketquantity where CustomerName=@oldcustomername and ShowTime=@oldshowtime";
 
-       using(SqlConnection connection=new SqlConnection(ConnectionString))
+       using(SqlConnection connection=new SqlConnection(ConnectionStringProvider.ConnectionString))
        {
         connection.Open();
         SqlCommand insertcommand=new SqlCommand(query,connection);
@@ -73,7 +78,7 @@ public class Program{
     public static void DeleteMovieTicket(string customerName,string showTime)
     {
         string query="delete from MovieTicket where CustomerName=@customername and ShowTime=@showtime";
-        using(SqlConnection connection=new SqlConnection(ConnectionString))
+        using(SqlConnection connection=new SqlConnection(ConnectionStringProvider.ConnectionString))
         {
             connection.Open();
             SqlCommand delcmd=new SqlCommand(query,connection);
@@ -92,7 +97,7 @@ public class Program{
     public static void SearchMovieTicketByMovieName(string movieName)
     {
         string query="select * FROM MovieTicket where MovieName=@moviename ";
-        using(SqlConnection connection=new SqlConnection(ConnectionString))
+        using(SqlConnection connection=new SqlConnection(ConnectionStringProvider.ConnectionString))
         {
             connection.Open();
             SqlCommand viewcmd=new SqlCommand(query,connection);
@@ -108,7 +113,7 @@ public class Program{
     public static void FilterMovieTicketByShowTime(string showTime)
     {
         string query="select * FROM MovieTicket where ShowTime=@showtime ";
-        using(SqlConnection connection=new SqlConnection(ConnectionString))
+        using(SqlConnection connection=new SqlConnection(ConnectionStringProvider.ConnectionString))
         {
             connection.Open();
             SqlCommand viewcmd=new SqlCommand(query,connection);
